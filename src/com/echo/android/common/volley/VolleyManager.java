@@ -22,6 +22,7 @@ public class VolleyManager {
 
 	private VolleyManager(Context context, int imageCacheSize) {
 		mContext = context.getApplicationContext();
+		mImageCacheSize = imageCacheSize;
 		init();
 	}
 
