@@ -42,7 +42,6 @@ public class VolleyManager {
 
 	private void init() {
 		mRequestQueue = Volley.newRequestQueue(mContext);
-		mImageLoader = new ImageLoader(mRequestQueue, new BitmapLruCache(mImageCacheSize));
 	}
 
 	public RequestQueue getRequestQueue() {
@@ -67,11 +66,14 @@ public class VolleyManager {
 	}
 
 	/**
-	 * you need to implement your own imageListner
+	 * you can use the loader with NetWorkImageView
 	 * 
 	 * @return
 	 */
 	public ImageLoader getImageLoader() {
+		if (mImageLoader == null) {
+			mImageLoader = new ImageLoader(mRequestQueue, new BitmapLruCache(mImageCacheSize));
+		}
 		return mImageLoader;
 	}
 
