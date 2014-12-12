@@ -101,6 +101,33 @@ public class TemplateContentProvider extends ContentProvider{
 			return ContentUris.withAppendedId(uri, id);
 		}
 	}
+	
+	@Override
+	public int bulkInsert(Uri uri, ContentValues[] values) {
+		synchronized (DB_LOCK) {
+			SQLiteDatabase db = mDBHelper.getWritableDatabase();
+			try {
+				db.beginTransaction();
+				switch (sUriMatcher.match(uri)) {
+					case ROUTE_TEMPLATE_TABLE:
+						for (ContentValues value : values) {
+							db.insert(TemplateTable.TABLE_NAME, null, value);
+						}
+						db.setTransactionSuccessful();
+						getContext().getContentResolver().notifyChange(uri, null);
+						return values.length;
+					case ROUTE_TEMPLATE_TABLE_ROW:
+					default:
+						db.setTransactionSuccessful();
+						throw new IllegalArgumentException("Insert failed: " + uri);
+				}
+			} catch (Exception e) {
+				throw new IllegalArgumentException("Insert failed: " + uri);
+			} finally {
+				db.endTransaction();
+			}
+		}
+	}
 
 	@Override
 	public int delete(Uri uri, String selection, String[] selectionArgs) {
