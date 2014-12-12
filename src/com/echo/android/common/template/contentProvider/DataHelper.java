@@ -28,6 +28,6 @@ public class DataHelper {
 	// TODO the up layer do not need care about the uri
 	public Cursor queryXXX(String[] projection, String selection, String[] selectionArgs, String sortOrder){
 		ContentResolver contentResolver = mContext.getContentResolver();
-		return contentResolver.query(TemplateTable.CONTENT_URI, projection, selection, selectionArgs, sortOrder);
+		return contentResolver.query(TemplateDataHelper.CONTENT_URI, projection, selection, selectionArgs, sortOrder);
 	}
 }

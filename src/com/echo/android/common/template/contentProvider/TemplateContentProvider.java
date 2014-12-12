@@ -27,8 +27,8 @@ public class TemplateContentProvider extends ContentProvider{
 	
 	private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 	static{
-		sUriMatcher.addURI(TemplateTable.CONTENT_AUTHORITY, TemplateTable.TABLE_NAME, ROUTE_TEMPLATE_TABLE);
-		sUriMatcher.addURI(TemplateTable.CONTENT_AUTHORITY, TemplateTable.TABLE_NAME + "/#", ROUTE_TEMPLATE_TABLE_ROW);
+		sUriMatcher.addURI(TemplateDataHelper.CONTENT_AUTHORITY, TemplateDataHelper.TemplateDbInfo.TABLE_NAME, ROUTE_TEMPLATE_TABLE);
+		sUriMatcher.addURI(TemplateDataHelper.CONTENT_AUTHORITY, TemplateDataHelper.TemplateDbInfo.TABLE_NAME + "/#", ROUTE_TEMPLATE_TABLE_ROW);
 	}
 	
 	// end modify
@@ -50,10 +50,10 @@ public class TemplateContentProvider extends ContentProvider{
 		String type = null;
 		switch (sUriMatcher.match(uri)) {
 		case ROUTE_TEMPLATE_TABLE:
-			type = TemplateTable.CONTENT_TYPE;
+			type = TemplateDataHelper.CONTENT_TYPE;
 			break;
 		case ROUTE_TEMPLATE_TABLE_ROW:
-			type = TemplateTable.CONTENT_ITEM_TYPE;
+			type = TemplateDataHelper.CONTENT_ITEM_TYPE;
 			break;
 		default:
 			throw new IllegalArgumentException("Uri error: " + uri);
@@ -69,10 +69,10 @@ public class TemplateContentProvider extends ContentProvider{
 			switch (sUriMatcher.match(uri)) {
 			case ROUTE_TEMPLATE_TABLE_ROW:
 				String id = uri.getLastPathSegment();
-				selection = selection + " AND " + TemplateTable.Rows._ID + " = " + id;
+				selection = selection + " AND " + TemplateDataHelper.TemplateDbInfo._ID + " = " + id;
 				// no break here
 			case ROUTE_TEMPLATE_TABLE:
-				cursor = db.query(TemplateTable.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+				cursor = db.query(TemplateDataHelper.TemplateDbInfo.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
 				cursor.setNotificationUri(getContext().getContentResolver(), uri);
 				break;
 			default:
@@ -90,7 +90,7 @@ public class TemplateContentProvider extends ContentProvider{
 			long id;
 			switch (sUriMatcher.match(uri)) {
 			case ROUTE_TEMPLATE_TABLE:
-				id = db.insert(TemplateTable.TABLE_NAME, null, values);
+				id = db.insert(TemplateDataHelper.TemplateDbInfo.TABLE_NAME, null, values);
 				getContext().getContentResolver().notifyChange(uri, null);
 				break;
 
@@ -111,7 +111,7 @@ public class TemplateContentProvider extends ContentProvider{
 				switch (sUriMatcher.match(uri)) {
 					case ROUTE_TEMPLATE_TABLE:
 						for (ContentValues value : values) {
-							db.insert(TemplateTable.TABLE_NAME, null, value);
+							db.insert(TemplateDataHelper.TemplateDbInfo.TABLE_NAME, null, value);
 						}
 						db.setTransactionSuccessful();
 						getContext().getContentResolver().notifyChange(uri, null);
@@ -138,9 +138,9 @@ public class TemplateContentProvider extends ContentProvider{
 			switch (sUriMatcher.match(uri)) {
 			case ROUTE_TEMPLATE_TABLE_ROW:
 				id = uri.getLastPathSegment();
-				selection = selection + " AND " + TemplateTable.Rows._ID + " = " + id;
+				selection = selection + " AND " + TemplateDataHelper.TemplateDbInfo._ID + " = " + id;
 			case ROUTE_TEMPLATE_TABLE:
-				count = db.delete(TemplateTable.TABLE_NAME, selection, selectionArgs);
+				count = db.delete(TemplateDataHelper.TemplateDbInfo.TABLE_NAME, selection, selectionArgs);
 				break;
 
 			default:
@@ -159,9 +159,9 @@ public class TemplateContentProvider extends ContentProvider{
 			switch (sUriMatcher.match(uri)) {
 			case ROUTE_TEMPLATE_TABLE_ROW:
 				id = uri.getLastPathSegment();
-				selection = selection + " AND " + TemplateTable.Rows._ID + " = " + id;
+				selection = selection + " AND " + TemplateDataHelper.TemplateDbInfo._ID + " = " + id;
 			case ROUTE_TEMPLATE_TABLE:
-				count = db.update(TemplateTable.TABLE_NAME, values, selection, selectionArgs);
+				count = db.update(TemplateDataHelper.TemplateDbInfo.TABLE_NAME, values, selection, selectionArgs);
 				break;
 
 			default:
@@ -185,7 +185,7 @@ public class TemplateContentProvider extends ContentProvider{
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-			TemplateTable.createTable(db);
+			TemplateDataHelper.TemplateDbInfo.createTable(db);
 		}
 
 		@Override
