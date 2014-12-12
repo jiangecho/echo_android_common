@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <provider 
-            android:name="com.echo.android.common.template.contentProvider.TemplateContentProvider"
+            android:name="com.echo.android.common.template.restful.dao.TemplateContentProvider"
             android:authorities="com.echo.template.template.contentProvider"
             android:exported="false">
             

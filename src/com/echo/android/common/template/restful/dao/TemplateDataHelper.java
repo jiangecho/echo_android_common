@@ -1,4 +1,4 @@
-package com.echo.android.common.template.contentProvider;
+package com.echo.android.common.template.restful.dao;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -20,7 +20,7 @@ public class TemplateDataHelper extends BaseDataHelper{
 	}
 	
 	public static final String CONTENT_AUTHORITY = "com.echo.template.template.contentProvider";
-	public static final Uri CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY + "/" + TemplateDbInfo.TABLE_NAME);
+	public static final Uri CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY + "/" + TemplateObjectsDbInfo.TABLE_NAME);
 	public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd.template.table";
 	public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd.template.row";
 	
@@ -30,24 +30,26 @@ public class TemplateDataHelper extends BaseDataHelper{
 	}
 
 
-	// TODO must implement your own CursorLoader
+	/**
+	 * TODO implement your own CursorLoader and make your Fragment or Activity
+	 * implement LoarderManager.LoadCallbacks
+	 * 
+	 */
 	@Override
 	public CursorLoader getCursorLoader() {
-		return new CursorLoader(mContext, getContentUri(), null, null, null, TemplateDbInfo._ID + "ASC");
+		return new CursorLoader(mContext, getContentUri(), null, null, null, TemplateObjectsDbInfo._ID + "ASC");
 	}
 
-	public static class TemplateDbInfo implements BaseColumns{
+	public static class TemplateObjectsDbInfo implements BaseColumns{
 		public static final String TABLE_NAME = "templateTable";
-		public static final String ROW_1 = "row_1";
-		public static final String ROW_2 = "row_2";
-		public static final String ROW_3 = "row_3";
+		public static final String TITLE = "title";
+		public static final String URL = "url";
 
 		public static void createTable(SQLiteDatabase db){
 			String sqlCreateTable = "CREATE TABLE " + TABLE_NAME + " ("
-					+ TemplateDbInfo._ID + " INTEGER PRIMARY KEY, "
-					+ TemplateDbInfo.ROW_1 + " text, "
-					+ TemplateDbInfo.ROW_2 + " text, "
-					+ TemplateDbInfo.ROW_3 + " text "
+					+ TemplateObjectsDbInfo._ID + " INTEGER PRIMARY KEY, "
+					+ TemplateObjectsDbInfo.TITLE + " text, "
+					+ TemplateObjectsDbInfo.URL + " text "
 					+ ")"
 					;
 			db.execSQL(sqlCreateTable);

@@ -68,6 +68,7 @@ public class VolleyManager {
 
 	/**
 	 * you can use the loader with NetWorkImageView
+	 * or use loadImageToView instead
 	 * 
 	 * @return
 	 */

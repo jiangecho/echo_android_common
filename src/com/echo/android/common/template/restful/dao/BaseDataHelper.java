@@ -1,4 +1,4 @@
-package com.echo.android.common.template.contentProvider;
+package com.echo.android.common.template.restful.dao;
 
 import java.util.List;
 

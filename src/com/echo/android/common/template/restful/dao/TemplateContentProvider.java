@@ -1,4 +1,4 @@
-package com.echo.android.common.template.contentProvider;
+package com.echo.android.common.template.restful.dao;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -27,8 +27,8 @@ public class TemplateContentProvider extends ContentProvider{
 	
 	private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 	static{
-		sUriMatcher.addURI(TemplateDataHelper.CONTENT_AUTHORITY, TemplateDataHelper.TemplateDbInfo.TABLE_NAME, ROUTE_TEMPLATE_TABLE);
-		sUriMatcher.addURI(TemplateDataHelper.CONTENT_AUTHORITY, TemplateDataHelper.TemplateDbInfo.TABLE_NAME + "/#", ROUTE_TEMPLATE_TABLE_ROW);
+		sUriMatcher.addURI(TemplateDataHelper.CONTENT_AUTHORITY, TemplateDataHelper.TemplateObjectsDbInfo.TABLE_NAME, ROUTE_TEMPLATE_TABLE);
+		sUriMatcher.addURI(TemplateDataHelper.CONTENT_AUTHORITY, TemplateDataHelper.TemplateObjectsDbInfo.TABLE_NAME + "/#", ROUTE_TEMPLATE_TABLE_ROW);
 	}
 	
 	// end modify
@@ -69,10 +69,10 @@ public class TemplateContentProvider extends ContentProvider{
 			switch (sUriMatcher.match(uri)) {
 			case ROUTE_TEMPLATE_TABLE_ROW:
 				String id = uri.getLastPathSegment();
-				selection = selection + " AND " + TemplateDataHelper.TemplateDbInfo._ID + " = " + id;
+				selection = selection + " AND " + TemplateDataHelper.TemplateObjectsDbInfo._ID + " = " + id;
 				// no break here
 			case ROUTE_TEMPLATE_TABLE:
-				cursor = db.query(TemplateDataHelper.TemplateDbInfo.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+				cursor = db.query(TemplateDataHelper.TemplateObjectsDbInfo.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
 				cursor.setNotificationUri(getContext().getContentResolver(), uri);
 				break;
 			default:
@@ -90,7 +90,7 @@ public class TemplateContentProvider extends ContentProvider{
 			long id;
 			switch (sUriMatcher.match(uri)) {
 			case ROUTE_TEMPLATE_TABLE:
-				id = db.insert(TemplateDataHelper.TemplateDbInfo.TABLE_NAME, null, values);
+				id = db.insert(TemplateDataHelper.TemplateObjectsDbInfo.TABLE_NAME, null, values);
 				getContext().getContentResolver().notifyChange(uri, null);
 				break;
 
@@ -111,7 +111,7 @@ public class TemplateContentProvider extends ContentProvider{
 				switch (sUriMatcher.match(uri)) {
 					case ROUTE_TEMPLATE_TABLE:
 						for (ContentValues value : values) {
-							db.insert(TemplateDataHelper.TemplateDbInfo.TABLE_NAME, null, value);
+							db.insert(TemplateDataHelper.TemplateObjectsDbInfo.TABLE_NAME, null, value);
 						}
 						db.setTransactionSuccessful();
 						getContext().getContentResolver().notifyChange(uri, null);
@@ -138,9 +138,9 @@ public class TemplateContentProvider extends ContentProvider{
 			switch (sUriMatcher.match(uri)) {
 			case ROUTE_TEMPLATE_TABLE_ROW:
 				id = uri.getLastPathSegment();
-				selection = selection + " AND " + TemplateDataHelper.TemplateDbInfo._ID + " = " + id;
+				selection = selection + " AND " + TemplateDataHelper.TemplateObjectsDbInfo._ID + " = " + id;
 			case ROUTE_TEMPLATE_TABLE:
-				count = db.delete(TemplateDataHelper.TemplateDbInfo.TABLE_NAME, selection, selectionArgs);
+				count = db.delete(TemplateDataHelper.TemplateObjectsDbInfo.TABLE_NAME, selection, selectionArgs);
 				break;
 
 			default:
@@ -159,9 +159,9 @@ public class TemplateContentProvider extends ContentProvider{
 			switch (sUriMatcher.match(uri)) {
 			case ROUTE_TEMPLATE_TABLE_ROW:
 				id = uri.getLastPathSegment();
-				selection = selection + " AND " + TemplateDataHelper.TemplateDbInfo._ID + " = " + id;
+				selection = selection + " AND " + TemplateDataHelper.TemplateObjectsDbInfo._ID + " = " + id;
 			case ROUTE_TEMPLATE_TABLE:
-				count = db.update(TemplateDataHelper.TemplateDbInfo.TABLE_NAME, values, selection, selectionArgs);
+				count = db.update(TemplateDataHelper.TemplateObjectsDbInfo.TABLE_NAME, values, selection, selectionArgs);
 				break;
 
 			default:
@@ -185,7 +185,7 @@ public class TemplateContentProvider extends ContentProvider{
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-			TemplateDataHelper.TemplateDbInfo.createTable(db);
+			TemplateDataHelper.TemplateObjectsDbInfo.createTable(db);
 		}
 
 		@Override
