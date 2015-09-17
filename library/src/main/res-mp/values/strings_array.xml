@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="camera_gallery">
+        <item>相机</item>
+        <item>图片</item>
+    </string-array>
+
+    <string-array name="task_status">
+        <item>未完成</item>
+        <item>已完成</item>
+    </string-array>
+
+    <string-array name="message_action_text">
+        <item>复制</item>
+        <item>删除</item>
+    </string-array>
+
+
+    <string-array name="message_action_text_copy">
+        <item>复制</item>
+    </string-array>
+
+    <string-array name="message_action_image">
+        <item>删除</item>
+    </string-array>
+
+
+</resources>
